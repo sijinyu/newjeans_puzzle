@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url('./bg.jpg');
+  background-image: url('/public/bg.jpeg');
   background-size: cover;
   background-color: rgba(107, 101, 101, 0.8); /* 반투명 배경색 추가 */
   background-blend-mode: lighten; 

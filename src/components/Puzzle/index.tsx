@@ -4,8 +4,8 @@ import PieceComponent from './PieceComonent';
 import './Puzzle.css';
 import { Piece } from './type';
 
-const imageSrc = '/newjeans.jpeg'; // 퍼즐 이미지 경로
-const soundSrc = '/success.mp3'; // 성공 시 재생할 음악 경로
+const imageSrc = '/public/newjeans.jpeg'; // 퍼즐 이미지 경로
+const soundSrc = '/public/success.mp3'; // 성공 시 재생할 음악 경로
 
 
 const Puzzle: React.FC = () => {
