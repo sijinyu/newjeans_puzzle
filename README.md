@@ -1,1 +1,1 @@
-# newjins_puzzle
+# newjeans_puzzle
