@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import Puzzle from './components/Puzzle';
+import React from "react";
+import "./App.css";
+import Puzzle from "./components/specific/Puzzle";
 
 const App: React.FC = () => {
   return (
@@ -9,6 +9,6 @@ const App: React.FC = () => {
       <Puzzle />
     </div>
   );
-}
+};
 
 export default App;
