@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
-import PieceComponent from './PieceComonent';
+import PieceComponent from '../specific/Puzzle/components/PieceComonent';
+import { Piece } from '../specific/Puzzle/type';
 import './Puzzle.css';
-import { Piece } from './type';
 
 const imageSrc = '/public/newjeans.jpeg'; // 퍼즐 이미지 경로
 const soundSrc = '/public/success.mp3'; // 성공 시 재생할 음악 경로
