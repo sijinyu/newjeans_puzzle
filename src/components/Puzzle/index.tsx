@@ -14,7 +14,7 @@ const Puzzle: React.FC = () => {
   const [pieces, setPieces] = useState<Piece[]>([]); // 퍼즐 조각 상태
   const [isSolved, setIsSolved] = useState(true); // 퍼즐이 해결되었는지 여부
   const [isShuffled, setIsShuffled] = useState(false); // 퍼즐이 섞였는지 여부
-  const [play, { stop }] = useSound(soundSrc); // 성공 시 음악 재생 함수
+  const [play, { stop }] = useSound(soundSrc,{volume:50}); // 성공 시 음악 재생 함수
 
 
   
@@ -124,8 +124,8 @@ const Puzzle: React.FC = () => {
       setIsSolved(true);
       setIsShuffled(false);
       setSolvedCount((prev) => prev+1)
-      play();
       alert('성공했습니다!');
+      play();
     }
   }, [pieces, isShuffled, play]);
 
