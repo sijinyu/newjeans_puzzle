@@ -1,15 +1,94 @@
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
-import { Piece } from "../type";
+import { getRandomItem } from "../../../../common/utils";
 
-const soundSrc = "/success.mp3"; // 성공 시 재생할 음악 경로
 
-const usePuzzle = (gridSize: number) => {
+// 배경 이미지, 퍼즐 이미지, 사운드 파일 목록 정의
+const puzzleImages = ['/puzzle1.jpg', '/puzzle2.jpg', '/puzzle3.jpg','/puzzle4.jpg'];
+// const soundFiles = ['/sound1.mp3', '/sound2.mp3', '/sound3.mp3'];
+
+  // 무작위로 배경 이미지, 퍼즐 이미지, 사운드 파일 선택
+
+
+  interface Piece {
+    id: number;
+    row: number;
+    col: number;
+  }
+  
+  
+const usePuzzle = () => {
   const [pieces, setPieces] = useState<Piece[]>([]);
   const [isSolved, setIsSolved] = useState(true);
   const [isShuffled, setIsShuffled] = useState(false);
   const [solvedCount, setSolvedCount] = useState(0);
-  const [play, { stop }] = useSound(soundSrc);
+  const [gridSize, setGridSize] = useState(4);
+  const [play, { stop }] = useSound('/success.mp3');
+  const [puzzleImage, _] = useState(getRandomItem(puzzleImages));
+
+
+  // 드래그 중일 때 호출되는 함수
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  // 드래그 시작 시 호출되는 함수
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    if (!isShuffled) {
+      
+      alert('셔플 준비 갈 미완료')
+      e.preventDefault();
+      return;
+    }
+    e.dataTransfer.setData("text/plain", index.toString());
+  };
+  // 드롭 시 호출되는 함수
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+    if (!isShuffled) {
+      e.preventDefault();
+      return;
+    }
+    const draggedIndex = parseInt(e.dataTransfer.getData("text/plain"));
+    if (!isValidMove(draggedIndex, index)) {
+      e.preventDefault();
+      return;
+    }
+    const newPieces = [...pieces];
+    [newPieces[draggedIndex], newPieces[index]] = [
+      newPieces[index],
+      newPieces[draggedIndex],
+    ];
+    setPieces(newPieces);
+  };
+
+
+  
+  // 그리드 크기 증가 함수
+  const increaseGridSize = () => {
+    if (gridSize < 7) {
+      setGridSize(gridSize + 1);
+      setIsShuffled(false);
+      setIsSolved(true);
+    }
+  };
+
+   // 그리드 크기 감소 함수
+   const decreaseGridSize = () => {
+    if (gridSize > 2) {
+      setGridSize(gridSize - 1);
+      setIsShuffled(false);
+      setIsSolved(true);
+    }
+  };
+
+
+    // 퍼즐 초기화
+    useEffect(() => {
+      initializePuzzle();
+    }, [gridSize, puzzleImage]);
 
   // 퍼즐 초기화 함수
   const initializePuzzle = () => {
@@ -55,6 +134,7 @@ const usePuzzle = (gridSize: number) => {
     return isAdjacent;
   };
 
+  
   useEffect(() => {
     initializePuzzle();
   }, [gridSize]);
@@ -73,10 +153,15 @@ const usePuzzle = (gridSize: number) => {
     pieces,
     isSolved,
     isShuffled,
+    puzzleImage,
+    handleDrop,
     solvedCount,
-    setPieces,
     handleShuffleClick,
-    isValidMove,
+    handleDragOver,
+    handleDragStart,
+    gridSize,
+    decreaseGridSize,
+    increaseGridSize,
   };
 };
 

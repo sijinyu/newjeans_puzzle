@@ -1,72 +1,28 @@
-import React, { useState } from "react";
-import usePuzzle from "./hooks/usePuzzle";
-import PieceComponent from "./components/PieceComonent";
+import React from "react";
 import Button from "../../unit/Button";
 import "./Puzzle.css";
+import PieceComponent from "./components/PieceComonent";
+import usePuzzle from "./hooks/usePuzzle";
 
-const imageSrc = "/newjeans.jpeg"; // 퍼즐 이미지 경로
 
 const Puzzle: React.FC = () => {
-  const [gridSize, setGridSize] = useState(4);
   const {
+    gridSize,
     pieces,
     isSolved,
     isShuffled,
     solvedCount,
-    setPieces,
+    puzzleImage,
     handleShuffleClick,
-    isValidMove,
-  } = usePuzzle(gridSize);
+    handleDragOver,
+    handleDragStart,
+    handleDrop,
+    decreaseGridSize,
+    increaseGridSize,
+    
+  } = usePuzzle();
+  
 
-  // 드래그 시작 시 호출되는 함수
-  const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
-    index: number
-  ) => {
-    if (!isShuffled) {
-      e.preventDefault();
-      return;
-    }
-    e.dataTransfer.setData("text/plain", index.toString());
-  };
-
-  // 드롭 시 호출되는 함수
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-    if (!isShuffled) {
-      e.preventDefault();
-      return;
-    }
-    const draggedIndex = parseInt(e.dataTransfer.getData("text/plain"));
-    if (!isValidMove(draggedIndex, index)) {
-      e.preventDefault();
-      return;
-    }
-    const newPieces = [...pieces];
-    [newPieces[draggedIndex], newPieces[index]] = [
-      newPieces[index],
-      newPieces[draggedIndex],
-    ];
-    setPieces(newPieces);
-  };
-
-  // 드래그 중일 때 호출되는 함수
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
-
-  // 그리드 크기 증가 함수
-  const increaseGridSize = () => {
-    if (gridSize < 7) {
-      setGridSize(gridSize + 1);
-    }
-  };
-
-  // 그리드 크기 감소 함수
-  const decreaseGridSize = () => {
-    if (gridSize > 2) {
-      setGridSize(gridSize - 1);
-    }
-  };
 
   const puzzleGridStyles = {
     gridTemplateColumns: `repeat(${gridSize}, 100px)`,
@@ -100,7 +56,7 @@ const Puzzle: React.FC = () => {
             handleDrop={handleDrop}
             handleDragOver={handleDragOver}
             isShuffled={isShuffled}
-            imageSrc={imageSrc}
+            imageSrc={puzzleImage}
           />
         ))}
       </div>
