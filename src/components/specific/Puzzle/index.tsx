@@ -17,6 +17,7 @@ const Puzzle: React.FC = () => {
     handleDragOver,
     handleDragStart,
     handleDrop,
+    handlePuzzleChange,
     decreaseGridSize,
     increaseGridSize,
     
@@ -31,9 +32,10 @@ const Puzzle: React.FC = () => {
 
   return (
     <div className="puzzle-container">
+      <button onClick={handlePuzzleChange}>다른 그림 퍼즐 맞추기</button>
       <div className="controls">
         <Button onClick={decreaseGridSize}>-</Button>
-        <span>
+        <span style={{color:'InfoBackground'}}>
           {gridSize} x {gridSize}
         </span>
         <Button onClick={increaseGridSize}>+</Button>
@@ -42,7 +44,7 @@ const Puzzle: React.FC = () => {
         셔플
       </Button>
       <p className="highlight">
-        상하좌우로만 움직일 수 있어용 성공하면 <strong>노래가 나옵니다!</strong>
+        상하좌우 1칸씩 움직일 수 있어용 성공하면 <strong>노래가 나옵니다!</strong>
       </p>
       {isSolved && solvedCount > 0 && <span>퍼즐 통과 횟수 {solvedCount}</span>}
       <div className="puzzle-grid" style={puzzleGridStyles}>

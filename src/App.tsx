@@ -22,7 +22,7 @@ const App: React.FC = () => {
     <div className="App" style={{  
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize:'contain',
-      backgroundColor: `rgba(107, 101, 101, 0.8)`, /* 반투명 배경색 추가 */
+      backgroundColor: `rgba(102, 101, 101, 0.9)`, /* 반투명 배경색 추가 */
       backgroundBlendMode: `lighten`
       }}>
       <h1>NewJeans Puzzle Game</h1>

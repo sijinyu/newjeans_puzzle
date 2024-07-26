@@ -24,7 +24,7 @@ const usePuzzle = () => {
   const [solvedCount, setSolvedCount] = useState(0);
   const [gridSize, setGridSize] = useState(4);
   const [play, { stop }] = useSound('/success.mp3');
-  const [puzzleImage, _] = useState(getRandomItem(puzzleImages));
+  const [puzzleImage, setPuzzleImage] = useState(getRandomItem(puzzleImages));
 
 
   // 드래그 중일 때 호출되는 함수
@@ -65,13 +65,21 @@ const usePuzzle = () => {
   };
 
 
-  
+
+  const handlePuzzleChange = () => {
+    while(true) {
+      const newPuzzleImage = getRandomItem(puzzleImages)
+      if(puzzleImage !== newPuzzleImage)  {
+        setPuzzleImage(newPuzzleImage)
+        break;
+      }
+    }
+    
+  }
   // 그리드 크기 증가 함수
   const increaseGridSize = () => {
     if (gridSize < 7) {
       setGridSize(gridSize + 1);
-      setIsShuffled(false);
-      setIsSolved(true);
     }
   };
 
@@ -79,8 +87,6 @@ const usePuzzle = () => {
    const decreaseGridSize = () => {
     if (gridSize > 2) {
       setGridSize(gridSize - 1);
-      setIsShuffled(false);
-      setIsSolved(true);
     }
   };
 
@@ -159,6 +165,7 @@ const usePuzzle = () => {
     handleShuffleClick,
     handleDragOver,
     handleDragStart,
+    handlePuzzleChange,
     gridSize,
     decreaseGridSize,
     increaseGridSize,
